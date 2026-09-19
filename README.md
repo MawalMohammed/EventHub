@@ -18,7 +18,7 @@ Clone this repository or download it as a ZIP file (**Code > Download ZIP**) and
 Open Command Prompt (cmd) or PowerShell and navigate to the EventHub folder, for example:
 
 ```
-cd C:\Users\YourUsername\Desktop\EventHub
+cd C:\Users\YourUsername\Desktop\EventHub-main
 ```
 
 > Replace the path above with the actual location of the folder.
