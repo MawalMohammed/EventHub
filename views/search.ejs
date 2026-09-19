@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+
+<div class="container mt-4">
+    <h2>Search Results for "<%- query %>"</h2>
+    <p class="search-info"><span id="result-count"><%= results.length %></span> event(s) found</p>
+
+    <% if (results.length === 0) { %>
+        <div class="alert alert-warning">
+            No events found matching your search. Please try a different keyword.
+        </div>
+        <a href="/" class="btn btn-primary">Back to All Events</a>
+    <% } else { %>
+        <div class="row" id="event-grid">
+            <% results.forEach(event => { %>
+            <%- include('partials/event-card', { event }) %>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
+
+<%- include('partials/footer') %>

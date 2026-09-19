@@ -1,0 +1,17 @@
+<% const colors = ['#0f766e', '#b45309', '#be123c', '#4338ca', '#15803d', '#7e22ce']; %>
+<div class="col-md-4 mb-4">
+    <div class="card h-100 event-card">
+        <div class="event-img-placeholder" style="background-color: <%= colors[(event.id - 1) % colors.length] %>">
+            <span><%= event.category %></span>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"><%= event.name %></h5>
+            <p class="card-text text-muted mb-1 event-meta"><%= event.city %> &middot; <%= event.date %></p>
+            <p class="card-text"><%= event.description %></p>
+            <h5 class="event-price">SAR <%= event.price.toFixed(2) %></h5>
+        </div>
+        <div class="card-footer bg-white border-top-0 pb-3">
+            <a href="/event/<%= event.id %>" class="btn btn-primary">View Details &amp; Book</a>
+        </div>
+    </div>
+</div>

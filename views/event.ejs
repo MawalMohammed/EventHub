@@ -1,0 +1,43 @@
+<%- include('partials/header') %>
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Events</a></li>
+            <li class="breadcrumb-item active"><%= event.name %></li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <% const colors = ['#0f766e', '#b45309', '#be123c', '#4338ca', '#15803d', '#7e22ce']; %>
+        <div class="col-md-6">
+            <div class="event-img-placeholder large" style="background-color: <%= colors[(event.id - 1) % colors.length] %>">
+                <span><%= event.category %></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2 id="event-name"><%= event.name %></h2>
+            <span class="badge bg-secondary mb-3"><%= event.category %></span>
+            <p class="text-muted mb-2"><strong>City:</strong> <%= event.city %> &nbsp;|&nbsp; <strong>Date:</strong> <%= event.date %></p>
+            <p class="lead"><%= event.description %></p>
+            <h3 class="event-price mb-4">SAR <%= event.price.toFixed(2) %> <small class="text-muted fs-6">per ticket</small></h3>
+
+            <% if (error) { %>
+            <div class="alert alert-danger" id="quantity-error"><%= error %></div>
+            <% } %>
+
+            <form action="/cart/add" method="POST">
+                <input type="hidden" name="eventId" value="<%= event.id %>">
+                <div class="mb-3 quantity-field">
+                    <label for="quantity" class="form-label">Number of Tickets</label>
+                    <input type="text" class="form-control" id="quantity" name="quantity" value="<%= quantity %>">
+                    <div class="form-text">You can book between 1 and 10 tickets per event.</div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg" id="add-to-booking">Add to Booking</button>
+            </form>
+            <a href="/" class="btn btn-outline-secondary mt-2">Back to Events</a>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

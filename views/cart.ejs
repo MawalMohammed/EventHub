@@ -1,0 +1,56 @@
+<%- include('partials/header') %>
+
+<div class="container mt-4">
+    <h2 class="mb-4">My Booking</h2>
+
+    <% if (cart.length === 0) { %>
+        <div class="alert alert-info">
+            Your booking cart is empty. <a href="/">Browse our events</a> to get started!
+        </div>
+    <% } else { %>
+        <div class="table-responsive">
+            <table class="table align-middle" id="cart-table">
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Date</th>
+                        <th>Ticket Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% cart.forEach(item => { %>
+                    <tr>
+                        <td class="cart-item-name"><%= item.name %></td>
+                        <td><%= item.date %></td>
+                        <td>SAR <%= item.price.toFixed(2) %></td>
+                        <td class="cart-item-quantity"><%= item.quantity %></td>
+                        <td class="cart-item-subtotal">SAR <%= (item.price * item.quantity).toFixed(2) %></td>
+                        <td>
+                            <form action="/cart/remove" method="POST" class="d-inline">
+                                <input type="hidden" name="eventId" value="<%= item.id %>">
+                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                        <td><strong id="cart-total">SAR <%= total.toFixed(2) %></strong></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="d-flex justify-content-between mt-3">
+            <a href="/" class="btn btn-outline-secondary">Add More Events</a>
+            <a href="/checkout" class="btn btn-primary" id="proceed-to-checkout">Proceed to Checkout</a>
+        </div>
+    <% } %>
+</div>
+
+<%- include('partials/footer') %>

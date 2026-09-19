@@ -1,0 +1,85 @@
+<%- include('partials/header') %>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Checkout</h2>
+
+    <div class="row">
+        <!-- Customer Form -->
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Customer Information</h5>
+                    <form action="/checkout/place-order" method="POST">
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Mobile Number</label>
+                            <input type="text" class="form-control" id="phone" name="phone" required>
+                        </div>
+                        <p class="text-muted"><small>Your e-tickets will be sent to the email address above.</small></p>
+                        <button type="submit" class="btn btn-primary btn-lg w-100" id="place-order">Confirm Booking</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Summary -->
+        <div class="col-md-5">
+            <div class="card order-summary">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Booking Summary</h5>
+                    <% cart.forEach(item => { %>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span><%= item.name %> &times; <%= item.quantity %></span>
+                        <span>SAR <%= (item.price * item.quantity).toFixed(2) %></span>
+                    </div>
+                    <% }) %>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Subtotal:</span>
+                        <span id="checkout-subtotal">SAR <%= subtotal.toFixed(2) %></span>
+                    </div>
+                    <% if (discount > 0) { %>
+                    <div class="d-flex justify-content-between text-success mb-1">
+                        <span>Discount (<span id="checkout-discount-percent"><%= discountPercent %></span>%):</span>
+                        <span id="checkout-discount">-SAR <%= discount.toFixed(2) %></span>
+                    </div>
+                    <% } %>
+                    <hr>
+                    <div class="d-flex justify-content-between fw-bold fs-5">
+                        <span>Total:</span>
+                        <span id="checkout-total">SAR <%= total.toFixed(2) %></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Promo Code -->
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Promo Code</h5>
+                    <form action="/checkout/apply-promo" method="POST">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="promoCode" name="promoCode"
+                                   placeholder="Enter code" value="<%= promoCode %>">
+                            <button type="submit" class="btn btn-outline-primary" id="apply-promo">Apply</button>
+                        </div>
+                        <% if (error) { %>
+                        <small class="text-danger mt-1 d-block" id="promo-error"><%= error %></small>
+                        <% } %>
+                        <% if (message) { %>
+                        <small class="text-success mt-1 d-block" id="promo-message"><%= message %></small>
+                        <% } %>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,61 @@
+<%- include('partials/header') %>
+
+<div class="container mt-4">
+    <div class="text-center mb-4">
+        <h2 class="order-success" id="confirmation-title">Booking Confirmed!</h2>
+        <p class="lead">Thank you for your booking, <strong id="customer-name"><%= booking.customerName %></strong>!</p>
+        <p class="text-muted">Booking Reference: <span id="booking-reference"><%= booking.reference %></span></p>
+    </div>
+
+    <div class="card mx-auto" style="max-width: 640px;">
+        <div class="card-body">
+            <h5 class="card-title mb-3">Booking Details</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Date</th>
+                        <th>Tickets</th>
+                        <th class="text-end">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% booking.items.forEach(item => { %>
+                    <tr>
+                        <td><%= item.name %></td>
+                        <td><%= item.date %></td>
+                        <td><%= item.quantity %></td>
+                        <td class="text-end">SAR <%= (item.price * item.quantity).toFixed(2) %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end">Subtotal:</td>
+                        <td class="text-end" id="confirmation-subtotal">SAR <%= booking.subtotal.toFixed(2) %></td>
+                    </tr>
+                    <% if (booking.discount > 0) { %>
+                    <tr class="text-success">
+                        <td colspan="3" class="text-end">Discount (<%= booking.discountPercent %>%):</td>
+                        <td class="text-end" id="confirmation-discount">-SAR <%= booking.discount.toFixed(2) %></td>
+                    </tr>
+                    <% } %>
+                    <tr class="fw-bold">
+                        <td colspan="3" class="text-end">Total Paid:</td>
+                        <td class="text-end" id="confirmation-total">SAR <%= booking.total.toFixed(2) %></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <hr>
+            <p><strong>Email:</strong> <%= booking.email %></p>
+            <p><strong>Mobile:</strong> <%= booking.phone %></p>
+
+            <div class="text-center mt-4">
+                <a href="/" class="btn btn-primary">Browse More Events</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
